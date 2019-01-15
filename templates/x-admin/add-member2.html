@@ -1,0 +1,132 @@
+{% extends "x-admin/base.html" %}
+
+{% block content %}
+      <div class="app-title">
+        <div>
+          <h1><i class="fa fa-edit"></i> Form Components</h1>
+          <p>Bootstrap default form components</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+          <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+          <li class="breadcrumb-item">Forms</li>
+          <li class="breadcrumb-item"><a href="#">Form Components</a></li>
+        </ul>
+      </div>
+
+    <div class="container">
+
+
+        <form class="form-horizontal" method="post" action="/user/add/">
+            {% csrf_token %}
+            <div class="form-group ">
+                <label for="" class="col-sm-2 control-label">用户名</label>
+                <div class="col-sm-4">
+                    <input type="text" name="username" class="form-control" id="username" placeholder="请输入用户名">
+                    <span id="helpBlock2" class="help-block"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
+                <div class="col-sm-4">
+                    <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                    <span id="helpBlock2" class="help-block"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">确认密码</label>
+                <div class="col-sm-4">
+                    <input type="password" name="repassword" class="form-control" id="repassword" placeholder="Password">
+                    <span id="helpBlock2" class="help-block"></span>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label for="" class="col-sm-2 control-label">电话</label>
+                <div class="col-sm-4">
+                    <input type="text" name="phone" class="form-control" id="phone" placeholder="请输入电话">
+                    <span id="helpBlock2" class="help-block"></span>
+                </div>
+            </div>
+             <div class="form-group ">
+                <label for="" class="col-sm-2 control-label">邮箱</label>
+                <div class="col-sm-4">
+                    <input type="email" name="email" class="form-control" id="email" placeholder="请输入邮箱">
+                    <span id="helpBlock2" class="help-block"></span>
+                </div>
+            </div>
+             <div class="form-group ">
+                <label for="" class="col-sm-2 control-label">身份证</label>
+                <div class="col-sm-4">
+                    <input type="text" name="card_id" class="form-control" id="card_id" placeholder="请输入身份证号码">
+                    <span id="helpBlock2" class="help-block"></span>
+                </div>
+            </div>
+             <div class="form-group ">
+                <label for="" class="col-sm-2 control-label">地址</label>
+                <div class="col-sm-4">
+                    <input type="text" name="address" class="form-control" id="address" placeholder="请输入住址">
+                    <span id="helpBlock2" class="help-block"></span>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label for="" class="col-sm-2 control-label">入职时间</label>
+                <div class="col-sm-4">
+                    <input type="date" name="entry_time" class="form-control" id="entry_time">
+                    <span id="helpBlock2" class="help-block"></span>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label for="" class="col-sm-2 control-label">状态</label>
+                <div class="col-sm-4">
+                    <select class="form-control" style="padding: 0" name="state" id="state">
+                        {% for state in state_choices%}
+                        <option value="{{ state.0 }}" >{{ state.1 }}</option>
+                       {% endfor %}
+                    </select>
+                <span id="helpBlock2" class="help-block"></span>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label for="" class="col-sm-2 control-label">职务</label>
+                <div class="col-sm-4">
+                    <select class="form-control" style="padding: 0" name="roles" id="role" multiple>
+                        {% for role in role_list%}
+                        <option value="{{ role.id }}">{{ role.title }}</option>
+                       {% endfor %}
+                    </select>
+                <span id="helpBlock2" class="help-block"></span>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label for="" class="col-sm-2 control-label">性别</label>
+                <div class="col-sm-2" id="gender">
+                    {% for gender in gender_choices %}
+
+                    <label class="radio-inline">
+
+                        <input type="radio" name="gender" id="{{ gender.0 }}" value="{{ gender.0 }}"> {{ gender.1 }}
+                    </label>
+
+                    {% endfor %}
+
+
+                </div>
+            <div class="col-sm-2" id="helpBlock2" class="help-block"></div>
+
+
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default" id="button">添加</button>
+                </div>
+            </div>
+
+            </form>
+
+    </div>
+    <script src="../../static/js/jquery-3.2.1.min.js"></script>
+    <script src="../../static/js/check-user.js"></script>
+
+
+{% endblock %}

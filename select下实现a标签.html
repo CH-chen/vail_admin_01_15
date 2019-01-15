@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<select id="" onchange="window.location=this.value">
+    <option>choose one</option>
+    <option value="https://www.baidu.com">百度</option>
+    <option value="https://www.qq.com">腾讯</option>
+    <option value="https://www.360.com">360</option>
+</select>
+
+                <select name="year" >
+                  ...
+                    <option value="37" <%="37".equals(m)?"selected":"" %>> 1</option>
+                    <option value="38" <%="38".equals(m)?"selected":"" %>>2</option>
+                    <option value="39" <%="39".equals(m)?"selected":"" %>>3</option>
+                    <option value="40" <%="40".equals(m)?"selected":"" %>>4</option>
+                    <option value="41" <%="41".equals(m)?"selected":"" %>>5</option>
+                    ...
+                </select>
+
+
+<select id="state1" name="state1" >
+<option value="" >请选择...</option>
+<option value="2" ${state==2?"selected":""}>AAA</option>
+<option value="3" ${state==3?"selected":""}>BBB</option>
+</select>
+
+<div class="friend_link">
+                        <select onchange=mbar(this) name="select">
+                            <option selected>友情链接</option>
+                            <option value="http://www.163.com">163</option>
+                            <option value="http://www.flash8.net/">flash8</option>
+                            <option value="http://www.baidu.com">百度</option>
+                            <option value="http://www.baidu.com">百度</option>
+                            <option value="http://www.baidu.com">百度</option>
+                            <option value="http://www.baidu.com">百度</option>
+                        </select>
+
+</div>
+
+<select name="status" id="status" class="select_small" >
+<option value="" <c:if test="${dto.prizepool.status eq ''}">selected="selected"</c:if> >全部</option>
+<option value="1" <c:if test="${dto.prizepool.status eq '1'}">selected="selected"</c:if>>有效</option>
+<option value="0" <c:if test="${dto.prizepool.status eq
+'0'}">selected="selected"</c:if>>失效</option>
+</select>
+
+
+</body>
+</html>

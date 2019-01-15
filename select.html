@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<select name="status" id="status" class="select_small" >
+<option value="" <c:if test="${dto.prizepool.status eq ''}"></c:if> >全部</option>
+<option value="1" <c:if test="${dto.prizepool.status eq '1'}"></c:if>>有效</option>
+<option value="0" <c:if test="${dto.prizepool.status eq
+'0'}">selected="selected"</c:if>>失效</option>
+</select>
+</body>
+</html>

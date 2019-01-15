@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+                <label >职务</label>
+
+
+                    <select name="roles" id="role" multiple>
+                        {% for role in role_list%}
+                        <option value="{{ role.id }}">{{ role.title }}</option>
+                       {% endfor %}
+                    </select>
+
+
+
+
+</body>
+</html>

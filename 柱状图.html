@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            /* css 代码  */
+        </style>
+        <script src="https://img.hcharts.cn/highcharts/highcharts.js"></script>
+        <script src="https://img.hcharts.cn/highcharts/modules/exporting.js"></script>
+        <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+    </head>
+    <body>
+        <div id="container" style="min-width:400px;height:400px;color:da "></div>
+        <script>
+            var chart = Highcharts.chart('container', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: '全球各大城市人口排行'
+    },
+    subtitle: {
+        text: '数据截止 2017-03，来源: <a href="https://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
+    },
+    xAxis: {
+        type: 'category',
+        labels: {
+            rotation: -45  // 设置轴标签旋转角度
+        }
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: '人口 (百万)'
+        }
+    },
+    legend: {
+        enabled: false
+    },
+    tooltip: {
+        pointFormat: '人口总量: <b>{point.y:.1f} 百万</b>'
+    },
+    series: [{
+        name: '总人口',
+        data: [
+            ['上海', 24.25],
+            ['卡拉奇', 23.50],
+            ['北京', 21.51],
+            ['德里', 16.78],
+            ['拉各斯', 16.06],
+            ['天津', 15.20],
+            ['伊斯坦布尔', 14.16],
+            ['东京', 13.51],
+            ['广州', 13.08],
+            ['孟买', 12.44],
+            ['莫斯科', 12.19],
+            ['圣保罗', 12.03],
+            ['深圳', 60.46],
+
+        ],
+        dataLabels: {
+            enabled: true,
+            rotation: -90,
+            color: '#FFFFFF',
+            align: 'right',
+            format: '{point.y:.1f}', // :.1f 为保留 1 位小数
+            y: 10
+        }
+    }]
+});
+            // JS 代码
+        </script>
+    </body>
+</html>

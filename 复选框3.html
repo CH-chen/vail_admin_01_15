@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+
+</head>
+<body>
+
+<div>
+    <input id="choice" type="checkbox">全选
+    <input  class="check_item" type="checkbox" name="check"  value="1"/>全选
+<input  class="check_item" type="checkbox" name="check"  value="1"/>复选框1
+<input class="check_item" type="checkbox" name="check"  value="2"/>复选框2
+<input class="check_item" type="checkbox" name="check"  value="3"/>复选框3
+ <br/>
+ <input class="check_item" type="checkbox" name="check"  value="4"/>复选框4
+<input class="check_item" type="checkbox" name="check" value="5"/>复选框5
+<input class="check_item" type="checkbox" name="check"  value="6"/>复选框6
+ <br/>
+<input class="check_item" type="checkbox" name="check"  value="7"/>复选框7
+<input class="check_item" type="checkbox" name="check"  value="8"/>复选框8
+<input class="check_item" type="checkbox" name="check"  value="9"/>复选框9
+<input class="check_item" type="button" id="dosubmit" value="提交">
+</div>
+
+<script>
+   $('#dosubmit').click(function() {
+       var checkID = [];//定义一个空数组
+       if($('input[name=check]:checked').length == $('input[name=check]').length){
+       $('.choice_item').prop({'checked':true});
+     }
+     else{
+       $('.choice_item').prop({'checked':false});
+     }
+
+
+
+
+
+
+   });
+
+
+
+
+</script>
+
+</body>
+</html>
