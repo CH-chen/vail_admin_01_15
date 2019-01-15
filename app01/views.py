@@ -125,13 +125,13 @@ def edit(request):
     user = models.UserInfo.objects.filter(pk=id).first()
     gender_choices = models.UserInfo.gender_choices
     state_choices = models.UserInfo.state_choice
+    for aaa in state_choices:
+        print(aaa)
+    print(state_choices)
+    print(user.state)
+    print(user.entry_time)
     role_list = models.Role.objects.all()
     print(user.roles.all())
-    # for  role in user.roles.all():
-    #     print(role)
-    # for role in roles_list:
-    #     print(role)
-
 
     return render(request,"x-admin/edit-member.html",locals())
 

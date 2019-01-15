@@ -72,7 +72,7 @@
             <div class="form-group ">
                 <label for="" class="col-sm-2 control-label" >入职时间</label>
                 <div class="col-sm-4">
-                    <input type="date" name="entry_time" class="form-control" id="entry_time">
+                    <input type="date" name="entry_time" class="form-control" id="entry_time" value="{{ user.entry_time|date:"Y-m-d" }}">
                     <span id="helpBlock2" class="help-block"></span>
                 </div>
             </div>
@@ -81,7 +81,12 @@
                 <div class="col-sm-4">
                     <select class="form-control" style="padding: 0" name="state" id="state">
                         {% for state in state_choices%}
+
+                            {% if state.0 == user.state %}
+                            <option selected value="{{ state.0 }}" >{{ state.1 }}</option>
+                            {% else %}
                         <option value="{{ state.0 }}" >{{ state.1 }}</option>
+                            {% endif %}
                        {% endfor %}
                     </select>
                 <span id="helpBlock2" class="help-block"></span>
@@ -108,10 +113,16 @@
                 <label for="" class="col-sm-2 control-label">性别</label>
                 <div class="col-sm-2" id="gender">
                     {% for gender in gender_choices %}
+                        {% if gender.0 == user.gender %}
 
-                    <label class="radio-inline">
-
-                        <input type="radio" name="gender" id="{{ gender.0 }}" value="{{ gender.0 }}"> {{ gender.1 }}
+                            <label class="radio-inline">
+                                <input type="radio" checked name="gender" id="{{ gender.0 }}"
+                                       value="{{ gender.0 }}"> {{ gender.1 }}
+                            </label>
+                        {% else %}
+                            <label class="radio-inline">
+                            <input type="radio" name="gender" id="{{ gender.0 }}" value="{{ gender.0 }}"> {{ gender.1 }}
+                        {% endif %}
                     </label>
 
                     {% endfor %}
@@ -133,11 +144,11 @@
             </form>
 
     </div>
-    <script src="../../static/js/jquery-3.2.1.min.js"></script>
-        <script>
+ <script src="../../static/js/jquery-3.2.1.min.js"></script>
+    <script>
 
     $(function () {
-        var error_name = false;
+
         var error_password = false;
         var error_repassword = false;
         var error_phone =false;
@@ -149,9 +160,7 @@
         var error_role = false;
         var error_gender = false;
 
-        $("#username").blur(function () {
-            check_username();
-        });
+
         $("#password").blur(function () {
             check_pwd();
         });
@@ -171,52 +180,6 @@
             check_address();
         });
 
-        //检查用户名
-        function check_username() {
-            var len = $('#username').val().length;
-            var username = $("#username").val();
-
-            if(len<2||len>20)
-            {
-                $('#username').next().html('输入2-20个字符的用户名').css("color","red");
-                $('#username').next().show();
-                error_name = true;
-            }
-            else
-            {
-                //第一种向后端发送请求
-            {#    console.log(username)#}
-            {#    $.get('/user/check_user/?username='+$('#username').val(),function(data){#}
-		    {#    if(data.count == 1){#}
-		    {#        console.log(data.count)#}
-		    {#        $('#username').next().html('用户名已经存在').show().css("color","red");#}
-		    {#        error_name=true;#}
-		    {#    }else{#}
-			{#        $('#username').next().hide();#}
-			{#        error_name = false;#}
-		    {#    }#}
-		    {#});#}
-                //第二种向后端发送请求
-                console.log(username)
-                $.ajax({
-                    url:"/user/check_user/",
-                    type:"get",
-                    data:{"username":username},
-                    success:function (data) {
-                        if(data.count == 1){
-                            console.log(data.count)
-                            $('#username').next().html('用户名已存在,请重新输入').css("color","red").show();
-                            error_name = true;
-                        }else {
-                            $('#username').next().hide();
-                            error_name = false;
-                        }
-
-                    }
-                });
-
-            }
-            };
 
         //检查密码
         function check_pwd() {
@@ -313,7 +276,7 @@
         };
 
         $("#button").click(function () {
-            check_username();
+
             check_pwd();
             check_repwd();
             check_phone();
@@ -349,7 +312,14 @@
 
 
             };
-
+            if(role.length == 0){
+                $('#role').next().html('请选择职务').css("color","red");
+                $('#role').next().show();
+                error_role = true
+            }else{
+                $('#role').next().hide();
+                error_role = false
+            };
             if(gender.length == 0){
                 $('#gender').next().html('请选择性别').css("color","red");
                 $('#gender').next().show();
@@ -358,7 +328,7 @@
                 $('#gender').next().hide();
                 error_gender = false
             };
-            if(error_name == false && error_password == false &&
+            if(error_password == false &&
                 error_repassword == false && error_phone == false &&　
                 error_email == false && error_card == false && error_address == false &&
                 error_entry_time == false && error_state == false && error_role == false && error_gender == false){

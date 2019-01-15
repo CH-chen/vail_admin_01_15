@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="db" uuid="8b001967-33bf-4c52-87fb-68e66d43bbc4">
+    <data-source source="LOCAL" name="db" uuid="ef58070e-633a-4921-8aae-64811feeddca">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:D:\workplace\vail_admin\db.sqlite3</jdbc-url>
+      <jdbc-url>jdbc:sqlite:D:\workplace\vail_admin_demo\vail_admin_01_15\db.sqlite3</jdbc-url>
       <driver-properties>
         <property name="enable_load_extension" value="true" />
       </driver-properties>
