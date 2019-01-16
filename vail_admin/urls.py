@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^index/$', views.index),
     url(r'^', include("app01.urls")),
+    url(r'^', include("goods.urls")),
     # url(r'^', include("goods.urls")),
     url(r'^login/$', views.login),
 ]

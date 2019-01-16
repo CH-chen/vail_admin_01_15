@@ -1,0 +1,241 @@
+{% extends "x-admin/base.html" %}
+
+{% block content %}
+    <div class="app-title">
+        <div>
+          <h1><i class="fa fa-edit"></i> Form Components</h1>
+          <p>Bootstrap default form components</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+          <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+          <li class="breadcrumb-item">Forms</li>
+          <li class="breadcrumb-item"><a href="#">Form Components</a></li>
+        </ul>
+      </div>
+
+        <select class="form-control col-md-1" style="height: 34px;margin: 8px 10px 0 0" onchange="window.location=this.value" name="select">
+            <option value="" selected="selected">选择每页数据</option>
+            <option value="/goods/5/">每页5条数据-</option>
+            <option value="/goods/10/">每页10条数据</option>
+            <option value="/goods/20/">每页20条数据</option>
+            <option value="/goods/30/">每页30条数据</option>
+            <option value="/goods/50/">每页50条数据</option>
+            <option value="/goods/100/">每页100条数据</option>
+            <option value="/goods/200/">每页200条数据</option>
+            <option value="/goods/500/">每页500条数据</option>
+        </select>
+
+        <a type="button" class="btn btn-primary form-inline pull-left" href="/goods/add/" style="margin-top: 8px"
+           id="add">添加</a>
+        <button type="button" class="btn btn-primary form-inline pull-left" id="excell" onclick="method5('dataTable')"
+                style="margin:8px 0 0 10px">导出表格
+        </button>
+
+        <form class="navbar-form navbar-left form-inline" method="post" action="/goods/search/">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" name="title" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-primary">搜索</button>
+        </form>
+        <button type="button" class="btn btn-danger form-inline pull-right" style="margin-top: 8px" id="delete_all">
+            批量删除
+        </button>
+
+
+<table class="table table-bordered" id="dataTable">
+      <thead>
+        <tr>
+         <th>ID</th>
+            <th>名称</th>
+            <th>型号</th>
+            <th>单位</th>
+            <th>进价</th>
+            <th>进货数量</th>
+            <th>进货总价</th>
+            <th>售价</th>
+            <th>售货数量</th>
+            <th>售货总价</th>
+            <th>日期</th>
+            <th>库存</th>
+            <th>运费</th>
+            <th>实付款</th>
+            <th>利润</th>
+             <th>订货公司</th>
+            <th>操作</th>
+
+            <th><input id="choice" type="checkbox"></th>
+            <th>备注</th>
+        </tr>
+      </thead>
+      <tbody>
+       {% for goods in goods_list %}
+        <tr class="row1">
+
+          <th>{{ forloop.counter }}</th>
+          <th>{{ goods.typegoods.title}}</th>
+          <td>{{ goods.title }}</td>
+
+          <td>{{ goods.unit }}</td>
+          <td>{{ goods.bid_price }}</td>
+            <td>{{ goods.bid_num }}</td>
+            <td>{{ goods.bid_money }}</td>
+            <td>{{ goods.sale_price }}</td>
+            <td>{{ goods.sale_num }}</td>
+            <td>{{ goods.sale_money }}</td>
+            <td>{{ goods.goods_data|date:'Y-m-d H:i:s' }}</td>
+            <td>{{ goods.kuncui }}</td>
+            <td>{{ goods.goods_expense }}</td>
+            <td>{{ goods.actual_paymen }}</td>
+           <td>{{ goods.profit}}</td>
+           {% for order in goods.orderinfo_set.all %}
+
+           <td><a href="">{{ order.company.name }}</a></td>
+               {% empty %}
+                <td></td>
+
+           {% endfor %}
+
+
+            <td style="padding: 10px"><p style="margin: 0px">
+              <a type="button" class="btn btn-primary btn-sm" href="/goods/edit/?id={{goods.id}}" style="margin: 0px;padding: 0px">编辑</a>
+              <a type="button" class="btn btn-danger btn-sm" href="/goods/delete/{{ goods.pk }}/" style="margin: 0px;padding: 0px">删除</a>
+            </p></td>
+           <td><input class ="choice_item" type="checkbox" name="check" value="{{ goods.pk }}" ></td>
+           <td>{{ goods.jianjie}}</td>
+            {% endfor %}
+
+        </tr>
+
+      </tbody>
+    </table>
+    <nav class="pull-right">
+<ul class="pagination" style="margin-top: 0px" >
+   {{ pagination.page_html|safe }}
+</ul>
+</nav>
+ <script>
+    //批量删除
+   $("#choice").click(function () {
+
+     if($(this).prop("checked")){
+           $(".choice_item").prop("checked",true)
+     }else {
+           $(".choice_item").prop("checked",false)
+     }
+
+   });
+
+
+   $('#delete_all').click(function() {
+       var check_val = [];//定义一个空数组
+       var url = window.location.href;  //获取当前页面网址
+       console.log(url)
+       $("input[name='check']:checked").each(function (i) {//把所有被选中的复选框的值存入数组
+           check_val[i] = $(this).val();
+
+   });
+       {#发送ajax请求内层外层问题，内层出现多次ajax请求，外层一次#}
+       check_val.unshift(url);//把当前页面网址添加到check_val中，发回后端
+       console.log(check_val);
+       $.ajax({
+       url:'/user/delete_all/',
+       type:'get',
+       data:{"user_id":JSON.stringify(check_val)},
+       success:function (data) {
+           console.log(data);
+           location.href = data.url;
+
+       }
+   })
+
+
+   });
+
+   //打印表格
+        var idTmr;
+
+        function getExplorer() {
+            var explorer = window.navigator.userAgent;
+            //ie
+            if(explorer.indexOf("MSIE") >= 0) {
+                return 'ie';
+            }
+            //firefox
+            else if(explorer.indexOf("Firefox") >= 0) {
+                return 'Firefox';
+            }
+            //Chrome
+            else if(explorer.indexOf("Chrome") >= 0) {
+                return 'Chrome';
+            }
+            //Opera
+            else if(explorer.indexOf("Opera") >= 0) {
+                return 'Opera';
+            }
+            //Safari
+            else if(explorer.indexOf("Safari") >= 0) {
+                return 'Safari';
+            }
+        }
+
+        function method5(tableid) {
+            if(getExplorer() == 'ie') {
+                var curTbl = document.getElementById(tableid);
+                var oXL = new ActiveXObject("Excel.Application");
+                var oWB = oXL.Workbooks.Add();
+                var xlsheet = oWB.Worksheets(1);
+                var sel = document.body.createTextRange();
+                sel.moveToElementText(curTbl);
+                sel.select();
+                sel.execCommand("Copy");
+                xlsheet.Paste();
+                oXL.Visible = true;
+
+                try {
+                    var fname = oXL.Application.GetSaveAsFilename("Excel.xls",
+                        "Excel Spreadsheets (*.xls), *.xls");
+                } catch(e) {
+                    print("Nested catch caught " + e);
+                } finally {
+                    oWB.SaveAs(fname);
+                    oWB.Close(savechanges = false);
+                    oXL.Quit();
+                    oXL = null;
+                    idTmr = window.setInterval("Cleanup();", 1);
+                }
+
+            } else {
+                tableToExcel(tableid)
+            }
+        }
+
+        function Cleanup() {
+            window.clearInterval(idTmr);
+            CollectGarbage();
+        }
+        var tableToExcel = (function() {
+            var uri = 'data:application/vnd.ms-excel;base64,',
+                template = '<html><head><meta charset="UTF-8"></head><body><table  border="1">{table}</table></body></html>',
+                base64 = function(
+                    s) {
+                    return window.btoa(unescape(encodeURIComponent(s)))
+                },
+                format = function(s, c) {
+                    return s.replace(/{(\w+)}/g, function(m, p) {
+                        return c[p];
+                    })
+                }
+            return function(table, name) {
+                if(!table.nodeType)
+                    table = document.getElementById(table)
+                var ctx = {
+                    worksheet: name || 'Worksheet',
+                    table: table.innerHTML
+                }
+                window.location.href = uri + base64(format(template, ctx))
+            }
+        })()
+
+</script>
+{% endblock %}
