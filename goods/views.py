@@ -30,3 +30,29 @@ def search(request):
     else:
         return redirect('/goods/')
     return render(request, "x-admin/goods-list.html", locals())
+
+
+def orders(request,num=3):
+    order_list = models.OrderInfo.objects.all()
+    current_page = request.GET.get("page", 1)
+    all_count = models.OrderInfo.objects.all().count()
+    base_url = request.path
+    pagination = Pagination(all_count, int(current_page), base_url, request.GET, per_page=int(num), max_show=6)
+    order_list = models.OrderInfo.objects.all()[pagination.start:pagination.end]
+    import copy
+    params = copy.deepcopy(request.GET)
+    return render(request, "x-admin/order-list.html", locals())
+
+def order_detail(request):
+    id = request.GET.get("id")
+    print(id)
+    order_obj = models.OrderInfo.objects.filter(pk=id).first()
+
+    return render(request, "x-admin/order-detail.html", locals())
+
+def order_add(request):
+
+    return render(request, "x-admin/order-detail.html", locals())
+
+
+

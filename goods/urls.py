@@ -10,4 +10,10 @@ urlpatterns = [
     # url(r'^goods/edit/$', views.edit),
     # url(r'^goods/add/$', views.add),
     # url(r'^goods/check_user/$', views.check_user),
+    url(r'^orders/$', views.orders),
+    # url(r'^orders/(\d+)/$', views.orders),
+    url(r'^orders/detail/$', views.order_detail),
+    url(r'^orders/add/$', views.order_add),
+    # url(r'^orders/search/$', views.search),
+
 ]

@@ -25,13 +25,13 @@
             <option value="/goods/500/">每页500条数据</option>
         </select>
 
-        <a type="button" class="btn btn-primary form-inline pull-left" href="/goods/add/" style="margin-top: 8px"
+        <a type="button" class="btn btn-primary form-inline pull-left" href="/orders/add/" style="margin-top: 8px"
            id="add">添加</a>
         <button type="button" class="btn btn-primary form-inline pull-left" id="excell" onclick="method5('dataTable')"
                 style="margin:8px 0 0 10px">导出表格
         </button>
 
-        <form class="navbar-form navbar-left form-inline" method="post" action="/goods/search/">
+        <form class="navbar-form navbar-left form-inline" method="post" action="/orders/search/">
             {% csrf_token %}
             <div class="form-group">
                 <input type="text" name="title" class="form-control" placeholder="Search">
@@ -43,72 +43,65 @@
         </button>
 
 
-<table class="table table-bordered" id="dataTable">
-      <thead>
+    <table class="table table-bordered" id="dataTable">
+        <thead>
         <tr>
-         <th>ID</th>
-            <th>名称</th>
-            <th>型号</th>
-            <th>单位</th>
-            <th>进货单价</th>
-            <th>进货数量</th>
-            <th>进货总价</th>
-            <th>售货单价</th>
-            <th>售货数量</th>
-            <th>售货总价</th>
-            <th>日期</th>
-            <th>库存</th>
+            <th>ID</th>
+            <th>订单编号</th>
+            <th>订货公司</th>
+            <th>商品列表</th>
+            <th>订单金额</th>
             <th>运费</th>
-            <th>实付款</th>
+            <th>其它费用</th>
+            <th>实际支付</th>
             <th>利润</th>
-             <th>订货公司</th>
+
+            <th>日期</th>
+            <th>订单状态</th>
+            <th>业务人员</th>
             <th>备注</th>
             <th>操作</th>
 
             <th><input id="choice" type="checkbox"></th>
 
         </tr>
-      </thead>
-      <tbody>
-       {% for goods in goods_list %}
-        <tr class="row1">
+        </thead>
+        <tbody>
+        {% for order in order_list %}
+            <tr class="row1">
 
-          <td>{{ forloop.counter }}</td>
-          <td>{{ goods.typegoods.title}}</td>
-          <td>{{ goods.title }}</td>
-
-          <td>{{ goods.unit }}</td>
-          <td>{{ goods.bid_price }}</td>
-            <td>{{ goods.bid_num }}</td>
-            <td>{{ goods.bid_money }}</td>
-            <td>{{ goods.sale_price }}</td>
-            <td>{{ goods.sale_num }}</td>
-            <td>{{ goods.sale_money }}</td>
-            <td>{{ goods.goods_data|date:'Y-m-d' }}</td>
-            <td>{{ goods.kuncui }}</td>
-            <td>{{ goods.goods_expense }}</td>
-            <td>{{ goods.actual_paymen }}</td>
-           <td>{{ goods.profit}}</td>
-           {% for order in goods.orderinfo_set.all %}
-
-           <td><a href="">{{ order.company.name|slice:"0:-4" }}</a></td>
-               {% empty %}
+            <td>{{ forloop.counter }}</td>
+            <td>{{ order.order_num }}</td>
+            {% for order in order_list %}
+                <td><a href="/orders/detail/?id={{ order.id }}">{{ order.company.name|slice:"0:-4" }}</a></td>
+            {% empty %}
                 <td></td>
-
-           {% endfor %}
-
-            <td>{{ goods.jianjie}}</td>
-            <td style="padding: 10px"><p style="margin: 0px">
-              <a type="button" class="btn btn-primary btn-sm" href="/goods/edit/?id={{goods.id}}" style="margin: 0px;padding: 0px">编辑</a>
-              <a type="button" class="btn btn-danger btn-sm" href="/goods/delete/{{ goods.pk }}/" style="margin: 0px;padding: 0px">删除</a>
-            </p></td>
-           <td><input class ="choice_item" type="checkbox" name="check" value="{{ goods.pk }}" ></td>
-
             {% endfor %}
+            <td></td>
+            <td>{{ order.order_money }}</td>
+
+            <td>{{ order.order_expense }}</td>
+            <td>{{ order.order_orther }}</td>
+            <td>{{ order.actual_paymen }}</td>
+            <td>{{ order.profit }}</td>
+
+            <td>{{ order.order_date|date:'Y-m-d' }}</td>
+            <td>{{ order.order_state }}</td>
+            <td>{{ order.userinfo.name }}</td>
+            <td></td>
+            <td style="padding: 10px"><p style="margin: 0px">
+                <a type="button" class="btn btn-primary btn-sm" href="/orders/edit/?id={{ orders.id }}"
+                   style="margin: 0px;padding: 0px">编辑</a>
+                <a type="button" class="btn btn-danger btn-sm" href="/orders/delete/{{ orders.pk }}/"
+                   style="margin: 0px;padding: 0px">删除</a>
+            </p></td>
+            <td><input class="choice_item" type="checkbox" name="check" value="{{ orders.pk }}"></td>
+
+        {% endfor %}
 
         </tr>
 
-      </tbody>
+        </tbody>
     </table>
     <nav class="pull-right">
 <ul class="pagination" style="margin-top: 0px" >
