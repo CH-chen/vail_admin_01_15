@@ -1,8 +1,20 @@
-{% extends "x-admin/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+     <script src="https://img.hcharts.cn/highcharts/highcharts.js"></script>
+        <script src="https://img.hcharts.cn/highcharts/modules/exporting.js"></script>
+        <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
 
-{% block content %}
+</head>
+<body>
+ <div class="tools">
+            <button type="button" class="btn green" id="excell" onclick="method5('dataTable')">导出考勤表格</button>
+        </div>
 
-    <table width="910px" height="1285px" align="center" id="dataTable">
+
+<table width="910px" height="1285px" align="center" id="dataTable">
     <tr>
 
         <td valign="top" height="120">
@@ -13,7 +25,7 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td width="185" height="70"><img src="/static/avatar/logo2.png" alt=""></td>
+                    <td width="185" height="70"><img src="./static/avatar/logo2.png" alt=""></td>
                 </tr>
             </table>
             <hr width="810" style="margin: 2px auto">
@@ -51,15 +63,15 @@
         </td>
     </tr>
     <tr>
-        <td align="center" height="65"><table width="810" >
+        <td align="center"><table width="810">
             <tr><td ></td></tr>
             <tr><td>甲乙双方经友好协商,就向乙方提供 自动化类产品 达成如下协议：</td></tr>
             <tr><td height="15"></td></tr>
             <tr><td>一、价格条款</td></tr>
         </table></td>
     </tr>
-    <tr >
-        <td align="center" valign="top"><table border="1" width="810" cellpadding="0" cellspacing="0">
+    <tr>
+        <td align="center"><table border="1" width="810" cellpadding="0" cellspacing="0">
             <tr>
                 <td align="center">序号</td>
                 <td align="center">产品名称</td>
@@ -136,7 +148,7 @@
         </td>
     </tr>
     <tr>
-        <td height="166" valign="top">
+        <td height="166">
             <table width="810" align="center" >
                 <tr><td>总金额（含增值税）:<u>10380</u>（元）</td></tr>
                 <tr><td>二、付款方式：甲方执行款到发货的付款政策</td></tr>
@@ -210,8 +222,6 @@
 
 
 
+</body>
 
-
-
-
-{% endblock %}
+</html>
